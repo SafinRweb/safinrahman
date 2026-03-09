@@ -1,0 +1,105 @@
+---
+// Scroll-activated card with text highlighting animation (DigitalSaints style)
+---
+
+<section id="scroll-card" class="relative z-20 bg-black">
+  <!-- Tall scroll container for the pinned area -->
+  <div class="sc-wrapper relative" style="height: 150vh;">
+    <!-- Pinned content area -->
+    <div class="sc-pinned sticky top-0 min-h-screen flex items-center">
+      <div class="w-full px-[clamp(20px,4vw,64px)] py-[clamp(60px,10vh,120px)]">
+        <!-- Text positioned on left, max width for readability -->
+        <p id="highlight-text" class="font-display text-[clamp(22px,3vw,38px)] leading-[1.45] tracking-[-0.005em] max-w-[720px]">
+        </p>
+
+        <!-- Small label above text -->
+        <p class="sc-label font-mono text-[10px] tracking-[0.3em] text-white/[0.25] uppercase mb-8 flex items-center gap-3">
+          <span class="block w-5 h-px bg-white/[0.15]"></span>
+          About
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style is:global>
+  #highlight-text .word {
+    color: rgba(255, 255, 255, 0.15);
+    transition: color 0.05s ease;
+  }
+
+  #highlight-text .word.lit {
+    color: rgba(255, 255, 255, 1);
+  }
+
+  #highlight-text .word.accent {
+    font-style: italic;
+    color: rgba(74, 158, 255, 0.25);
+  }
+
+  #highlight-text .word.accent.lit {
+    color: rgba(74, 158, 255, 1);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  // Define the text with accent markers
+  // Words wrapped in ** will get the accent style
+  const rawText = "Building digital systems with precision and purpose. A full-stack developer crafting **high-performance** web experiences and **scalable architectures** — obsessed with every detail, from **pixel-perfect interfaces** to clean, maintainable code that powers the future of the web.";
+
+  const container = document.getElementById('highlight-text');
+  const scLabel = document.querySelector('.sc-label');
+
+  if (container && scLabel) {
+    // Move label before text
+    container.parentElement?.insertBefore(scLabel, container);
+
+    // Parse text and split into word spans
+    let html = '';
+    const parts = rawText.split(/(\*\*[^*]+\*\*)/);
+
+    parts.forEach(part => {
+      if (part.startsWith('**') && part.endsWith('**')) {
+        // Accent words
+        const words = part.slice(2, -2).split(' ');
+        words.forEach(word => {
+          html += `<span class="word accent">${word}</span> `;
+        });
+      } else {
+        // Regular words
+        const words = part.split(' ').filter(w => w.length > 0);
+        words.forEach(word => {
+          html += `<span class="word">${word}</span> `;
+        });
+      }
+    });
+
+    container.innerHTML = html.trim();
+
+    const wordEls = container.querySelectorAll<HTMLElement>('.word');
+
+    // Word-by-word highlight on scroll — pinned within the wrapper
+    ScrollTrigger.create({
+      trigger: '.sc-wrapper',
+      start: 'top top',
+      end: 'bottom bottom',
+      onUpdate: (self) => {
+        const progress = self.progress;
+        const totalWords = wordEls.length;
+        const litCount = Math.floor(progress * totalWords);
+
+        wordEls.forEach((el, i) => {
+          if (i <= litCount) {
+            el.classList.add('lit');
+          } else {
+            el.classList.remove('lit');
+          }
+        });
+      },
+    });
+  }
+</script>
