@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Loader from '../components/Loader.astro';
+import Navbar from '../components/Navbar.astro';
+import Hero from '../components/Hero.astro';
+import ScrollCard from '../components/ScrollCard.astro';
+import Marquee from '../components/Marquee.astro';
+import Works from '../components/Works.astro';
+import Process from '../components/Process.astro';
+import About from '../components/About.astro';
+import Contact from '../components/Contact.astro';
+import BottomBar from '../components/BottomBar.astro';
+---
+
+<Layout>
+  <Loader />
+
+  <div id="site">
+    <Navbar />
+    <Hero />
+    <ScrollCard />
+    <Marquee />
+    <Works />
+    <Process />
+    <About />
+    <Contact />
+  </div>
+
+  <BottomBar />
+</Layout>

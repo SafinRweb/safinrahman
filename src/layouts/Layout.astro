@@ -1,0 +1,89 @@
+---
+import Analytics from '@vercel/analytics/astro'
+import SpeedInsights from '@vercel/speed-insights/astro'
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const {
+  title = 'Safin Rahman — Developer & Engineer',
+  description = 'Full-stack developer crafting high-performance web experiences and scalable architectures.',
+} = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Google Fonts: DM Sans + Instrument Serif + DM Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Global Styles (includes Tailwind + custom CSS) -->
+    <style>
+      @import '../styles/global.css';
+    </style>
+  </head>
+  <body>
+    <!-- Custom Cursor -->
+    <div id="cur"></div>
+    <div id="cur-r"></div>
+
+    <!-- Noise Overlay -->
+    <div id="noise"></div>
+    <div id="scanline" aria-hidden="true"></div>
+
+    <slot />
+    <Analytics />
+    <SpeedInsights />
+
+    <!-- Cursor Script -->
+    <script>
+      import { gsap } from 'gsap';
+
+      const curDot = document.getElementById('cur')!;
+      const curRing = document.getElementById('cur-r')!;
+      let mx = -200, my = -200;
+
+      document.addEventListener('mousemove', (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        curDot.style.left = mx + 'px';
+        curDot.style.top = my + 'px';
+      });
+
+      // GSAP ring follow with lerp
+      gsap.ticker.add(() => {
+        const rx = parseFloat(curRing.style.left || '-200') || -200;
+        const ry = parseFloat(curRing.style.top || '-200') || -200;
+        curRing.style.left = rx + (mx - rx) * 0.11 + 'px';
+        curRing.style.top = ry + (my - ry) * 0.11 + 'px';
+      });
+
+      // Expand cursor on interactive elements
+      document.querySelectorAll('a, button, [role=button], .work-item, .proc-item').forEach((el) => {
+        el.addEventListener('mouseenter', () => {
+          curRing.classList.add('cur-expand');
+          curDot.classList.add('cur-dot-expand');
+        });
+        el.addEventListener('mouseleave', () => {
+          curRing.classList.remove('cur-expand');
+          curDot.classList.remove('cur-dot-expand');
+        });
+      });
+    </script>
+  </body>
+</html>

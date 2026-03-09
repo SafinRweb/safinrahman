@@ -1,0 +1,157 @@
+---
+// About section with skills grid and count-up stats
+---
+
+<section id="about" class="section px-[clamp(20px,4vw,64px)] py-[clamp(80px,12vh,140px)] border-t border-white/[0.07]">
+  <p class="s-label font-mono text-[11px] tracking-[0.32em] text-white/[0.26] uppercase flex items-center gap-3 mb-14">
+    <span class="block w-7 h-px bg-white/[0.18]"></span>
+    <span class="text-white/[0.18] mr-1.5">03</span> Know me
+  </p>
+
+  <div class="about-grid grid grid-cols-1 md:grid-cols-2 gap-[clamp(40px,6vw,100px)] items-start">
+    <!-- Photo / Portrait -->
+    <div class="about-sticky md:sticky md:top-[100px] reveal">
+      <div class="about-photo aspect-[4/5] overflow-hidden bg-white/[0.04] border border-white/[0.07] relative flex items-center justify-center max-w-[360px] md:max-w-none group">
+        <img src="/images/safin.jpg" alt="Safin Rahman" class="w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105" />
+        <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-black/80 to-transparent pointer-events-none z-0"></div>
+        <div class="about-photo-lbl absolute bottom-[18px] left-[18px] font-mono text-[10px] tracking-[0.22em] text-white/[0.8] uppercase flex items-center gap-2 z-10">
+          <span class="block w-px h-3.5 bg-white/[0.6]"></span>
+          Safin Rahman — Developer
+        </div>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div>
+      <h2 class="about-h2 font-display font-bold text-[clamp(40px,5.5vw,88px)] leading-[1.1] tracking-[-0.01em] text-white mb-[30px] reveal">
+        I Build<br/>
+        <span class="text-white/[0.16]">Things</span><br/>
+        That Work
+      </h2>
+
+      <p class="about-p text-[13.5px] leading-[1.9] text-white/[0.46] mb-[18px] max-w-[520px] reveal rd1">
+        Based in <strong class="text-white/[0.78] font-medium">Dhaka, Bangladesh</strong>, I'm a full-stack developer
+        with a sharp focus on clean architecture and performant interfaces. I treat code the way a craftsman treats
+        their tools — with care, intentionality and constant refinement.
+      </p>
+
+      <p class="about-p text-[13.5px] leading-[1.9] text-white/[0.46] mb-[18px] max-w-[520px] reveal rd2">
+        I work across the full stack: from <strong class="text-white/[0.78] font-medium">Frontend
+        design</strong> to local or cloud based backend. I care equally about the code nobody sees and the user
+        experience.
+      </p>
+
+      <p class="about-p text-[13.5px] leading-[1.9] text-white/[0.46] mb-[18px] max-w-[520px] reveal rd3">
+        Currently open to <strong class="text-white/[0.78] font-medium">freelance projects</strong> and select full-time
+        opportunities.
+      </p>
+
+      <!-- Skills Grid -->
+      <div class="skills-grid mt-11 grid grid-cols-2 max-sm:grid-cols-1 gap-px bg-white/[0.07] border border-white/[0.07] reveal rd4">
+        <div class="sk-cell bg-black p-[18px_20px]">
+          <p class="sk-cat font-mono text-[10px] tracking-[0.28em] text-white/[0.25] uppercase mb-2.5">Frontend</p>
+          <p class="sk-list text-[12.5px] text-white/[0.5] leading-[2.1]">React / Next.js<br/>TypeScript<br/>CSS / Tailwind<br/>Framer Motion</p>
+        </div>
+        <div class="sk-cell bg-black p-[18px_20px]">
+          <p class="sk-cat font-mono text-[10px] tracking-[0.28em] text-white/[0.25] uppercase mb-2.5">Backend</p>
+          <p class="sk-list text-[12.5px] text-white/[0.5] leading-[2.1]">Node.js / Express<br/>Python<br/>SQL<br/>MongoDB</p>
+        </div>
+        <div class="sk-cell bg-black p-[18px_20px]">
+          <p class="sk-cat font-mono text-[10px] tracking-[0.28em] text-white/[0.25] uppercase mb-2.5">Infrastructure</p>
+          <p class="sk-list text-[12.5px] text-white/[0.5] leading-[2.1]">GitHub<br/>Netlify<br/>Vercel<br/>Firebase</p>
+        </div>
+        <div class="sk-cell bg-black p-[18px_20px]">
+          <p class="sk-cat font-mono text-[10px] tracking-[0.28em] text-white/[0.25] uppercase mb-2.5">Tools</p>
+          <p class="sk-list text-[12.5px] text-white/[0.5] leading-[2.1]">Figma<br/>VS Code<br/>Antigravity<br/>Codex</p>
+        </div>
+      </div>
+
+      <!-- Stats -->
+      <div class="stats-row mt-11 flex gap-[clamp(24px,4vw,56px)] flex-wrap reveal">
+        <div class="stat flex flex-col gap-1">
+          <span class="stat-n font-display text-[clamp(36px,4vw,60px)] tracking-[-0.01em] text-white leading-none" data-count="12">0</span>
+          <span class="stat-l font-mono text-[10px] tracking-[0.22em] text-white/[0.28] uppercase">Projects Shipped</span>
+        </div>
+        <div class="stat flex flex-col gap-1">
+          <span class="stat-n font-display text-[clamp(36px,4vw,60px)] tracking-[-0.01em] text-white leading-none" data-count="3">0</span>
+          <span class="stat-l font-mono text-[10px] tracking-[0.22em] text-white/[0.28] uppercase">Years Building</span>
+        </div>
+        <div class="stat flex flex-col gap-1">
+          <span class="stat-n font-display text-[clamp(36px,4vw,60px)] tracking-[-0.01em] text-white leading-none">&infin;</span>
+          <span class="stat-l font-mono text-[10px] tracking-[0.22em] text-white/[0.28] uppercase">Coffee Consumed</span>
+        </div>
+        <div class="stat flex items-center mt-4 md:mt-0 md:ml-6">
+          <a href="https://drive.google.com/file/d/16KU9it9Zz2DuxxCyu-mctqylykZODp3r/view?usp=sharing" target="_blank" class="mag-btn relative overflow-hidden group no-underline !text-white !border-[#2952A3] hover:!border-[#3a70db] !px-6 !py-3 rounded-[3px] bg-[#2952A3]/10" data-scramble="Resume">
+            <span class="relative z-10 transition-colors duration-300 group-hover:text-black flex items-center gap-2">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 15 17 10"/>
+                <line x1="12" y1="15" x2="12" y2="3"/>
+              </svg>
+              Resume
+            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .reveal {
+    opacity: 0;
+    transform: translateY(34px);
+    transition: opacity 0.85s ease, transform 1s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .reveal.in {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .rd1 { transition-delay: 0.1s; }
+  .rd2 { transition-delay: 0.2s; }
+  .rd3 { transition-delay: 0.3s; }
+  .rd4 { transition-delay: 0.4s; }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ScrollTrigger reveals for about section
+  document.querySelectorAll<HTMLElement>('#about .reveal').forEach((el) => {
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 90%',
+      once: true,
+      onEnter: () => el.classList.add('in'),
+    });
+  });
+
+  // Count-up animation with GSAP
+  document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => {
+    const end = parseInt(el.dataset.count || '0');
+
+    ScrollTrigger.create({
+      trigger: el,
+      start: 'top 80%',
+      once: true,
+      onEnter: () => {
+        const counter = { val: 0 };
+        gsap.to(counter, {
+          val: end,
+          duration: 1.4,
+          ease: 'power2.out',
+          onUpdate: () => {
+            el.textContent = Math.floor(counter.val) + '+';
+          },
+          onComplete: () => {
+            el.textContent = end + '+';
+          },
+        });
+      },
+    });
+  });
+</script>

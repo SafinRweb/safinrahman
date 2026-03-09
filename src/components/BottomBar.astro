@@ -1,0 +1,58 @@
+---
+// Bottom bar with live clock
+---
+
+<div
+  id="bbar"
+  class="fixed bottom-0 left-0 right-0 z-500 flex items-center justify-between px-[clamp(20px,4vw,64px)] h-[44px] bg-transparent"
+>
+  <span class="bb bbc font-mono text-[10px] tracking-[0.18em] uppercase text-white whitespace-nowrap">Estd. 2026</span>
+  <span class="bb font-mono text-[10px] tracking-[0.18em] uppercase text-white whitespace-nowrap">
+    Bangladesh &nbsp;&mdash;&nbsp; <span id="ltime">00:00:00</span>
+  </span>
+  <span class="bb font-mono text-[10px] tracking-[0.18em] uppercase text-white whitespace-nowrap max-sm:hidden">EN</span>
+  <span
+    class="bb font-mono text-[10px] tracking-[0.18em] uppercase text-accent whitespace-nowrap transition-colors duration-200 hover:text-[#87c1ff]"
+    id="bb-con"
+    role="button"
+    tabindex="0"
+    data-scramble="Contact"
+  >
+    Contact
+  </span>
+</div>
+
+<style>
+  @media (max-width: 640px) {
+    .bb:nth-child(3) {
+      display: none;
+    }
+  }
+  @media (max-width: 420px) {
+    .bbc {
+      display: none;
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Live clock (BD time UTC+6)
+  function tickClock() {
+    const utc = Date.now() + new Date().getTimezoneOffset() * 60000;
+    const bd = new Date(utc + 6 * 3600000);
+    const p2 = (n: number) => String(n).padStart(2, '0');
+    const el = document.getElementById('ltime');
+    if (el) {
+      el.textContent = p2(bd.getHours()) + ':' + p2(bd.getMinutes()) + ':' + p2(bd.getSeconds());
+    }
+  }
+  setInterval(tickClock, 1000);
+  tickClock();
+
+  // Contact scroll
+  document.getElementById('bb-con')?.addEventListener('click', () => {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+  });
+</script>

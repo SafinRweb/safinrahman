@@ -1,0 +1,321 @@
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════
+   THEME — Custom Design Tokens
+═══════════════════════════════════════ */
+@theme {
+  --font-display: 'Instrument Serif', serif;
+  --font-mono: 'DM Mono', monospace;
+  --font-body: 'DM Sans', sans-serif;
+
+  --color-white: #ffffff;
+  --color-mid: rgba(255, 255, 255, 0.45);
+  --color-dim: rgba(255, 255, 255, 0.1);
+  --color-black: #060606;
+  --color-accent: #4a9eff;
+}
+
+/* Google Fonts loaded via <link> in Layout.astro */
+
+/* ═══════════════════════════════════════
+   GLOBAL RESET & BASE STYLES
+═══════════════════════════════════════ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--color-black);
+  color: var(--color-white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: none;
+}
+
+a, a:hover, a:focus, a:visited {
+  color: inherit;
+  text-decoration: none !important;
+  cursor: none;
+}
+
+button {
+  cursor: none;
+  background: none;
+  border: none;
+  outline: none;
+}
+
+/* ═══════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════ */
+#cur {
+  position: fixed;
+  z-index: 99999;
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+  transition: width 0.2s, height 0.2s;
+}
+
+#cur-r {
+  position: fixed;
+  z-index: 99998;
+  width: 36px;
+  height: 36px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: difference;
+}
+
+.cur-expand {
+  width: 60px !important;
+  height: 60px !important;
+}
+
+.cur-dot-expand {
+  width: 14px !important;
+  height: 14px !important;
+}
+
+/* ═══════════════════════════════════════
+   NOISE OVERLAY
+═══════════════════════════════════════ */
+#noise {
+  position: fixed;
+  inset: 0;
+  z-index: 8999;
+  pointer-events: none;
+  opacity: 0.06;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 256px;
+}
+
+/* ═══════════════════════════════════════
+   SCANLINE
+═══════════════════════════════════════ */
+#scanline {
+  position: fixed;
+  left: 0;
+  right: 0;
+  z-index: 9000;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.04), transparent);
+  pointer-events: none;
+  animation: scan 8s linear infinite;
+}
+
+@keyframes scan {
+  0% { top: -2px; }
+  100% { top: 100vh; }
+}
+
+/* ═══════════════════════════════════════
+   LOADER
+═══════════════════════════════════════ */
+#loader {
+  position: fixed;
+  inset: 0;
+  background: var(--color-black);
+  z-index: 9100;
+  overflow: hidden;
+  pointer-events: all;
+}
+
+#ld-name {
+  position: absolute;
+  top: 0;
+  left: 0;
+  font-family: var(--font-display);
+  font-size: clamp(72px, 16.67vw, 260px);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  padding: 0.06em 0.07em;
+  user-select: none;
+  white-space: nowrap;
+}
+
+#ld-name span {
+  display: inline-block;
+  color: rgba(255, 255, 255, 0.08);
+  will-change: color;
+}
+
+#ld-num {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-family: var(--font-display);
+  font-size: clamp(72px, 16.67vw, 260px);
+  line-height: 0.82;
+  letter-spacing: -0.01em;
+  color: rgba(255, 255, 255, 0.92);
+  padding: 0.06em 0.07em;
+  text-align: right;
+  user-select: none;
+}
+
+#ld-prog {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 1px;
+  width: 0%;
+  background: rgba(255, 255, 255, 0.2);
+  transition: width 0.08s linear;
+}
+
+#ld-status {
+  position: absolute;
+  bottom: clamp(80px, 12vw, 160px);
+  left: clamp(22px, 5vw, 80px);
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.28em;
+  color: rgba(255, 255, 255, 0.22);
+  text-transform: uppercase;
+}
+
+#ld-ticks {
+  position: absolute;
+  left: clamp(22px, 5vw, 80px);
+  top: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 2em 0;
+  pointer-events: none;
+}
+
+.ld-t {
+  width: 14px;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+#loader.out {
+  animation: ldOut 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes ldOut {
+  to { transform: translateY(-100%); }
+}
+
+/* ═══════════════════════════════════════
+   SITE WRAPPER
+═══════════════════════════════════════ */
+#site {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s ease 0.5s, transform 1s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+}
+
+#site.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════
+   KEYFRAME ANIMATIONS
+═══════════════════════════════════════ */
+@keyframes fadeUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+@keyframes spulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.25; }
+}
+
+@keyframes mqrun {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ═══════════════════════════════════════
+   MAGNETIC BUTTON
+═══════════════════════════════════════ */
+.mag-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 32px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  position: relative;
+  overflow: hidden;
+  transition: color 0.3s, border-color 0.3s;
+  will-change: transform;
+}
+
+.mag-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
+  z-index: -1;
+}
+
+.mag-btn:hover {
+  color: #000;
+  border-color: #fff;
+}
+
+.mag-btn:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ═══════════════════════════════════════
+   UNDERLINE LINK HOVER EFFECT UTILITY
+═══════════════════════════════════════ */
+.link-underline {
+  position: relative;
+  padding-bottom: 2px;
+  text-decoration: none !important;
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 1px;
+  background: #fff;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+}

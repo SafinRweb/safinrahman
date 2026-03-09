@@ -1,0 +1,93 @@
+---
+// Hero section component
+---
+
+<section
+  id="hero"
+  class="flex flex-col justify-end px-[clamp(20px,4vw,64px)] relative overflow-hidden"
+  style="height: calc(100vh - 44px); min-height: 560px; padding-bottom: 40px;"
+>
+  <!-- Background image -->
+  <div class="absolute inset-0 z-0">
+    <img src="/images/hero-bg.png" alt="" class="w-full h-full object-cover object-center" aria-hidden="true" />
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40"></div>
+  </div>
+
+  <!-- Code snippet -->
+  <div
+    class="hero-code absolute top-[clamp(100px,18vh,180px)] right-[clamp(20px,5vw,80px)] font-mono text-[11px] text-white/[0.1] leading-8 text-right pointer-events-none select-none z-10 max-sm:hidden"
+    aria-hidden="true"
+  >
+    const safin = {'{'}<br />
+    &nbsp;&nbsp;role: "Engineer",<br />
+    &nbsp;&nbsp;location: "BD",<br />
+    &nbsp;&nbsp;status: "available"<br />
+    {'}'}
+  </div>
+
+  <!-- Tag line — absolutely positioned, responsive -->
+  <p class="hero-tag absolute top-[clamp(100px,18vh,160px)] left-[clamp(20px,4vw,64px)] font-mono text-[11px] max-sm:text-[9px] tracking-[0.3em] max-sm:tracking-[0.2em] text-white/[0.28] uppercase opacity-0 translate-y-3 flex items-center gap-3.5 z-10">
+    <span class="block w-7 max-sm:w-4 h-px bg-white/[0.2]"></span>
+    <span class="max-sm:hidden">Developer &amp; Engineer &mdash; Dhaka, BD</span>
+    <span class="sm:hidden">Dev &amp; Eng &mdash; Dhaka</span>
+  </p>
+
+  <!-- Scroll hint — right side, more visible -->
+  <div class="scroll-hint absolute right-[clamp(20px,4vw,64px)] bottom-[60px] flex flex-col items-center gap-2.5 opacity-0 z-10 max-sm:hidden">
+    <div class="sc-line w-px h-[60px] bg-gradient-to-b from-white/[0.6] to-transparent"></div>
+    <span class="sc-lbl font-mono text-[10px] tracking-[0.3em] text-white/[0.45] uppercase font-medium" style="writing-mode: vertical-lr;">Scroll</span>
+  </div>
+</section>
+
+<style>
+  .hero-cta::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 26px;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.3);
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .hero-cta:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  .hero-cta:hover svg {
+    transform: translateX(8px);
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+
+  // Staggered entrance animations
+  const tl = gsap.timeline({ delay: 1.4 });
+
+  tl.to('.hero-tag', {
+    opacity: 1,
+    y: 0,
+    duration: 0.7,
+    ease: 'power2.out',
+  })
+  .to('.scroll-hint', {
+    opacity: 1,
+    duration: 0.7,
+    ease: 'power2.out',
+  }, '-=0.3');
+
+  // Scroll hint pulse
+  gsap.to('.sc-line', {
+    opacity: 0.25,
+    duration: 1.2,
+    yoyo: true,
+    repeat: -1,
+    ease: 'sine.inOut',
+    delay: 2.6,
+  });
+</script>

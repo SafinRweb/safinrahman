@@ -1,0 +1,92 @@
+---
+// Navbar component with logo scaling and text scramble
+---
+
+<nav
+  id="nav"
+  class="fixed top-0 left-0 right-0 z-500 flex items-center justify-between px-[clamp(20px,4vw,64px)] h-[80px] bg-transparent"
+>
+  <a href="#hero" id="nav-logo" class="sz-hero flex flex-col leading-none origin-top-left transition-transform duration-[650ms] ease-[cubic-bezier(0.22,1,0.36,1)] no-underline decoration-transparent">
+    <span class="nl-safin font-display font-bold text-[26px] tracking-[0.08em] text-white" data-scramble="SAFIN">SAFIN</span>
+    <span class="nl-rahman font-mono text-[10px] tracking-[0.32em] text-white/[0.38] uppercase mt-[3px]">Rahman</span>
+  </a>
+  <div id="nav-right" class="flex items-center gap-8">
+    <a href="#works" class="nav-btn font-mono text-[12px] tracking-[0.22em] uppercase text-white py-1.5 relative link-underline no-underline" data-scramble="Works">Works</a>
+    <a href="#about" class="nav-btn font-mono text-[12px] tracking-[0.22em] uppercase text-white py-1.5 relative link-underline no-underline" data-scramble="Know me">Know me</a>
+  </div>
+</nav>
+
+<style>
+  .sz-hero {
+    transform: scale(2);
+    transform-origin: left top;
+  }
+  .sz-scroll {
+    transform: scale(1.5);
+    transform-origin: left center;
+  }
+
+  @media (max-width: 640px) {
+    .sz-hero {
+      transform: scale(1.55);
+    }
+    .sz-scroll {
+      transform: scale(1.3);
+    }
+  }
+</style>
+
+<script>
+  import { gsap } from 'gsap';
+  import { ScrollTrigger } from 'gsap/ScrollTrigger';
+  gsap.registerPlugin(ScrollTrigger);
+
+  const logo = document.getElementById('nav-logo')!;
+
+  ScrollTrigger.create({
+    trigger: '#hero',
+    start: 'top top',
+    end: '80px top',
+    onLeave: () => {
+      logo.classList.replace('sz-hero', 'sz-scroll');
+    },
+    onEnterBack: () => {
+      logo.classList.replace('sz-scroll', 'sz-hero');
+    },
+  });
+
+  // Text scramble engine
+  const GLYPHS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*<>/\\|~';
+
+  function scramble(el: HTMLElement, original: string, dur = 700) {
+    if ((el as any)._scrambleTimer) clearInterval((el as any)._scrambleTimer);
+    const totalFrames = Math.ceil(dur / 48);
+    let it = 0;
+    (el as any)._scrambleTimer = setInterval(() => {
+      el.textContent = original
+        .split('')
+        .map((c, i) => {
+          if (c === ' ') return ' ';
+          if (i < Math.floor(it / (totalFrames / original.length))) return c;
+          return GLYPHS[Math.floor(Math.random() * GLYPHS.length)];
+        })
+        .join('');
+      if (++it >= totalFrames) {
+        el.textContent = original;
+        clearInterval((el as any)._scrambleTimer);
+      }
+    }, 48);
+  }
+
+  // Attach scramble to all [data-scramble] elements
+  document.querySelectorAll<HTMLElement>('[data-scramble]').forEach((el) => {
+    const orig = el.getAttribute('data-scramble') || el.textContent || '';
+    el.addEventListener('mouseenter', () => scramble(el, orig, 680));
+  });
+
+  // SAFIN logo scramble
+  const safinEl = document.querySelector<HTMLElement>('.nl-safin');
+  if (safinEl) {
+    safinEl.addEventListener('mouseenter', () => scramble(safinEl, 'SAFIN', 600));
+  }
+</script>
